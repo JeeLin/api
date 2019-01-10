@@ -7,14 +7,25 @@ use App\Models\Book;
 
 class BookController extends Controller
 {
+    //模糊搜索
+    public function text(Request $request)
+    {
+        $title = $request->title;
+
+        return Book::where('title','like','%'. $title .'%')->get()->toArray();
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    //分类内图书
+    public function index(Request $request)
     {
-        //
+        $type_id = $request->type_id;
+
+        return Book::where('type_id',$type_id)->paginate(12)->toArray();
     }
 
     /**

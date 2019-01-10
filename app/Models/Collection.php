@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Collection extends Model
 {
+    //隐藏部分
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
     //收藏所属用户
     public function user()
     {

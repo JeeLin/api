@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+    //隐藏部分
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
     //书籍所属类型
     public function type()
     {

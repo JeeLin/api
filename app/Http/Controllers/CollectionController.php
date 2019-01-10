@@ -4,17 +4,55 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Collection;
+use App\Models\Book;
 
 class CollectionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
+     * @param  \App\collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    //个人收藏界面
+    public function show(Request $request)
     {
-        //
+        $user_id = $request->user_id;
+        $book_id_array = Collection::where('user_id',$user_id)
+                        ->select('book_id')->get()->toArray();
+        $array = array();
+        foreach ($book_id_array as $i) {
+            array_push($array,Book::where('id',$i)->get()->toArray());
+        };
+        return $array;
+    }
+
+    //个人收藏状态改变
+    public function change(Request $request)
+    {
+        $user_id = $request->user_id;
+        $book_id = $request->book_id;
+        $array = array('user_id' => $user_id,'book_id' => $book_id);
+        $res = Collection::where($array)->get();
+        if($res->count()){
+            Collection::where($array)->delete();
+            $status = TRUE;
+            $mess = '已删除';
+        }else{
+            $this->insert_new($user_id,$book_id);
+            $status = FALSE;
+            $mess = '已收藏';
+        };
+        return response()->json(['status'=>$status,'message'=>$mess]);
+    }
+
+    public function insert_new($user_id,$book_id)
+    {
+        $coll = new Collection;
+        $coll->user_id = $user_id;
+        $coll->book_id = $book_id;
+
+        $coll->save();
     }
 
     /**
@@ -34,17 +72,6 @@ class CollectionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\collection  $collection
-     * @return \Illuminate\Http\Response
-     */
-    public function show(collection $collection)
     {
         //
     }

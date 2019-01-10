@@ -13,6 +13,6 @@ $factory->define(App\Models\Book::class, function (Faker $faker) {
         'ISBN' => $faker->isbn13,
         'introduction' => $faker->sentence,
         'type_id' => $faker->numberBetween(1,100),
-        'book_code' => $faker->numberBetween(10000,20000),
+        'book_code' => $faker->numberBetween(0,9999),
     ];
 });

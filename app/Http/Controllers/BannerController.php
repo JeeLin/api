@@ -7,6 +7,12 @@ use App\Models\Banner;
 
 class BannerController extends Controller
 {
+    //轮播图
+    public function banner()
+    {
+        return Banner::all();
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
+    //隐藏部分
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
     //视频所属书籍
     public function book()
     {

@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
+    //码查询,返回视频url
+    public function code(Request $request)
+    {
+        $code = $request->code;
+        return Video::where('video_code', $code)->value('video_url');
+    }
+
     /**
      * Display a listing of the resource.
      *
