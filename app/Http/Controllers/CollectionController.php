@@ -4,46 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Collection;
+use App\Models\User;
 use App\Models\Book;
+
 
 class CollectionController extends Controller
 {
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\collection  $collection
-     * @return \Illuminate\Http\Response
-     */
-    //个人收藏界面
-    public function show(Request $request)
-    {
-        $user_id = $request->user_id;
-        $book_id_array = Collection::where('user_id',$user_id)
-                        ->select('book_id')->get()->toArray();
-        $array = array();
-        foreach ($book_id_array as $i) {
-            array_push($array,Book::where('id',$i)->get()->toArray());
-        };
-        return $array;
-    }
-
     //个人收藏状态改变
     public function change(Request $request)
     {
         $user_id = $request->user_id;
         $book_id = $request->book_id;
-        $array = array('user_id' => $user_id,'book_id' => $book_id);
-        $res = Collection::where($array)->get();
-        if($res->count()){
-            Collection::where($array)->delete();
-            $status = FALSE;
-            $mess = '已删除';
-        }else{
-            $this->insert_new($user_id,$book_id);
-            $status = TRUE;
-            $mess = '已收藏';
-        };
-        return response()->json(['status'=>$status,'message'=>$mess]);
+        $user = User::find($user_id);
+        $book = Book::find($book_id);
+
+        $user->books()->toggle($book);
+        //还没有时间戳
     }
 
     public function insert_new($user_id,$book_id)
@@ -53,6 +29,17 @@ class CollectionController extends Controller
         $coll->book_id = $book_id;
 
         $coll->save();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\collection  $collection
+     * @return \Illuminate\Http\Response
+     */
+    public function show(video $video)
+    {
+        //
     }
 
     /**

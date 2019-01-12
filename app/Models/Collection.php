@@ -14,7 +14,7 @@ class Collection extends Model
     //收藏所属用户
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     //收藏所属图书

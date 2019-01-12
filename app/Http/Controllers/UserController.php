@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    //用户收藏页展示
+    public function show_collection(Request $request)
+    {
+        $id = $request->user_id;
+        return User::find($id)->books;
+    }
+
     //查询用户认证状态
     // public function status(Request $request)
     // {
@@ -52,10 +59,10 @@ class UserController extends Controller
      * @param  \App\video  $video
      * @return \Illuminate\Http\Response
      */
-    public function show(video $video)
-    {
-        //
-    }
+    // public function show(video $video)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.

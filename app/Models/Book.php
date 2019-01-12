@@ -17,14 +17,20 @@ class Book extends Model
         return $this->belongsTo(Type::class);
     }
 
-    //收藏
-    public function collection()
+    //图书与用户多对多
+    public function users()
     {
-        return $this->hasMany(Collection::class);
+        return $this->belongsToMany(User::class, 'collections', 'book_id', 'user_id');//注意参数格式
     }
 
+   public function collections()
+    {
+        return $this->hasMany('App\Models\Collection', 'book_id', 'id');
+    }
+
+
     //视频
-    public function video()
+    public function videos()
     {
         return $this->hasMany(Video::class);
     }

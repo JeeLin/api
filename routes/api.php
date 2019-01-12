@@ -19,9 +19,7 @@ use App\Models\Type;
 //     return $request->user();
 // });
 
-Route::get('test', function () {
-    return Book::paginate(9);
-});
+Route::get('test', 'UserController@show');
 
 Route::group(['prefix' => 'v1'], function () {
     //轮播图
@@ -44,7 +42,7 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::group(['prefix' => 'collect'], function () {
-        Route::get('show','CollectionController@show');//个人收藏界面
+        Route::get('show','UserController@show_collection');//个人收藏界面
         Route::get('change', 'CollectionController@change');//个人收藏状态改变
     });
 
