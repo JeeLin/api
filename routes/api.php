@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Type;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +19,11 @@ use App\Models\Book;
 //     return $request->user();
 // });
 
-Route::get('test', function () {
-    return Book::paginate(9);
-});
+Route::get('test', 'UserController@show');
 
 Route::group(['prefix' => 'v1'], function () {
     //轮播图
-    Route::get('banner', 'BannerController@banner');
+    Route::get('banner', 'BannerController@index');
 
     //查找：文本框，视频码
     Route::group(['prefix' => 'search'], function () {
@@ -32,9 +31,8 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('code', 'VideoController@code');//视频码查询
     });
 
-    Route::get('recommend', function () {//直接按顺序推荐，传参page
-        return Book::paginate(9)->toArray();
-    });
+    Route::get('recommend','BookController@recommend' );//直接按顺序推荐，传参page
+
 
     Route::group(['prefix' => 'type'], function () {
         Route::get('/',function(){//分类左框
@@ -44,9 +42,19 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::group(['prefix' => 'collect'], function () {
-        Route::get('show','CollectionController@show');//个人收藏界面
+        Route::get('show','UserController@show_collection');//个人收藏界面
         Route::get('change', 'CollectionController@change');//个人收藏状态改变
     });
 
     Route::get('detail', 'Controller@detail');//图书详情页
+    Route::get('video', 'VideoController@video');//视频url跳转
+
+    Route::group(['prefix' => 'user'], function () {
+        //Route::put('users/{id}', function ($id) {});//登录功能
+        Route::get('status', 'UserController@status');//用户认证状态查询
+        Route::post('upload', 'UserController@upload');//用户认证
+        Route::get('code','UserController@phone_code');//模拟获取验证码
+        Route::get('set_code','UserController@set_code');//重置验证码
+        Route::get('info','UserController@info');//用户中心信息查询
+    });
 });

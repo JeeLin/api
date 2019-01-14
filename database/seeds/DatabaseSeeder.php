@@ -19,17 +19,14 @@ class DatabaseSeeder extends Seeder
 
         //类型、图书、视频
         factory(\App\Models\Type::class,10)->create()->each(function($type){
-            for ($i=0; $i <20 ; $i++) {
-                $book = $type->book()->save(factory(\App\Models\Book::class)->create([
-                    'type_id' => $type->id,
+            $book = $type->book()->save(factory(\App\Models\Book::class)->create([
+                'type_id' => $type->id,
+            ]))->each(function($book){
+                $book->video()->save(factory(\App\Models\Video::class,10)->create([
+                    'book_id' => $book->id,
+                    'order' => ($j + 1),
                 ]));
-                for ($j=0; $j <10 ; $j++) {
-                    $book->video()->save(factory(\App\Models\Video::class)->create([
-                        'book_id' => $book->id,
-                        'order' => ($j + 1),
-                    ]));
-                }
-            };
+            });
         });
 
         //收藏

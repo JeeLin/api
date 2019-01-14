@@ -27,7 +27,7 @@ class Controller extends BaseController
         $book = Book::where('id',$book_id)->get()->toArray();
         $catalog = Video::where('book_id',$book_id)->orderBy('order','asc')->get();
         $array = array('user_id' => $user_id,'book_id' => $book_id);
-        $res = Collection::where($array)->get()->count()?TRUE:Flase;
+        $res = Collection::where($array)->get()->count()?1:0;
 
         return response()->json(['book'=>$book,'catalog'=>$catalog,'coll_status'=>$res]);
     }

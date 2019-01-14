@@ -11,7 +11,17 @@ class VideoController extends Controller
     public function code(Request $request)
     {
         $code = $request->code;
-        return Video::where('video_code', $code)->value('video_url');
+
+        return Video::where('video_code', $code)->select('book_id','order')->get();
+    }
+
+    //获取视频url，播放视频
+    public function video(Request $request)
+    {
+        $book_id = $request->book_id;
+        $order = $request->order;
+
+        return Video::where('book_id',$book_id)->where('order',$order)->select('video_url')->get();
     }
 
     /**

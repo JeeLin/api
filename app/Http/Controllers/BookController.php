@@ -12,7 +12,9 @@ class BookController extends Controller
     {
         $title = $request->title;
 
-        return Book::where('title','like','%'. $title .'%')->get()->toArray();
+        return Book::where('title','like','%'. $title .'%')
+            ->select('id','cover_url','title','author','price','press','published_date','ISBN')
+            ->paginate(9)->toArray();
     }
 
     /**
@@ -25,7 +27,18 @@ class BookController extends Controller
     {
         $type_id = $request->type_id;
 
-        return Book::where('type_id',$type_id)->paginate(12)->toArray();
+        return Book::where('type_id',$type_id)
+            ->select('id','cover_url','title')
+            ->paginate(12)->toArray();
+    }
+
+    //图书推荐
+    public function recommend(Request $request)
+    {
+        $page = $request->page;
+        $x = ($page > 1)?3:6;
+        return Book::select('id','cover_url','title')
+        ->paginate($x)->toArray();
     }
 
     /**

@@ -29,9 +29,14 @@ class User extends Authenticatable
         'created_at', 'updated_at',
     ];
 
-    //收藏
     public function collection()
     {
-        return $this->hasMany(Collection::class);
+        return $this->hasMany(Collection::class, 'user_id');
     }
+
+     //图书与用户多对多
+     public function books()
+     {
+         return $this->belongsToMany(Book::class,'collections', 'user_id', 'book_id');
+     }
 }
