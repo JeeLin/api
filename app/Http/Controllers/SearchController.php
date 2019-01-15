@@ -13,7 +13,8 @@ class SearchController extends Controller
     {
         $code = $request->code;
 
-        return Video::where('video_code', $code)->select('book_id','order')->get();
+        $cata =  Video::where('video_code', $code)->select('book_id','order')->get()->toarray();
+        return (empty($cata))? 0:$cata;
     }
 
     //模糊搜索
