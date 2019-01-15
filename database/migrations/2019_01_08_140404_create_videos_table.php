@@ -20,7 +20,7 @@ class CreateVideosTable extends Migration
             $table->string('catalog')->comment('章节内容');
             $table->string('video_url')->comment('视频地址');
             $table->unsignedinteger('video_code')->uniqe()->comment('一章一码');
-            $table->timestamps();
+            $table->timestamps();//应默认为当前时间
 
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });

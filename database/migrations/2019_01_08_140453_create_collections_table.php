@@ -17,7 +17,7 @@ class CreateCollectionsTable extends Migration
             $table->increments('id');
             $table->unsignedinteger('user_id');
             $table->unsignedinteger('book_id');
-            $table->timestamps();
+            $table->timestamps();//应默认为当前时间
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');

@@ -12,7 +12,7 @@ class Type extends Model
     ];
 
     //书籍
-    public function book()
+    public function books()
     {
         return $this->hasMany(Book::class, 'type_id', 'id');
     }
