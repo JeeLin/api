@@ -19,3 +19,7 @@
  */
 
 Encore\Admin\Form::forget(['map', 'editor']);
+
+// Column::extend('pass', function ($value) {
+//     return "<button class='pass-it' data-id='{$this->id}'>通过</button>";
+// });

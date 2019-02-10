@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show(Request $request)
+    //通过认证
+    // public function pass(Request $request)
+    // {
+    //     $id = $request->user_id;
+
+    //     User::where('id',$id)->update(['status'=>3]);
+    //     return ['success'=> true];
+    // }
+
+    public function show()
     {
-        $id = $request->user_id;
-        // $code = $request->code;
-        return User::find($id)->value('code');
+        $user = User::find(1);
+        $url = $user->image_url;
+        return json_decode($url,true);
     }
 
     //个人中心界面信息获取
@@ -47,18 +56,21 @@ class UserController extends Controller
         // 获取表单上传文件
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
-        $path = 'upload/';
+        $path = 'upload/images/';
         $i = $request->index;
         $name = $id.'-'.($i+1).'.'.$extension;
         // 移动到框架应用根目录/public/upload/ 目录下
         //此目录需要权限
         $info = $file->move($path,$name);
+        //取出用户邮箱信息
         $pic = $user->image_url;
+        //第一张时邮箱地址初始化
         if(!$i){
             $pic = "";
         }
         $pic .= $path.$name.';';
-        User::where('id',$id)->update(['status'=>2,'email'=>$email,'image_url'=>$pic]);//
+        //存入邮箱、图片地址，并改变用户状态
+        User::where('id',$id)->update(['status'=>2,'email'=>$email,'image_url'=>$pic]);
         return 3;
 
         // if ($info) {
@@ -96,7 +108,7 @@ class UserController extends Controller
     public function show_collection(Request $request)
     {
         $id = $request->user_id;
-        return User::find($id)->books;
+        return User::find($id)->books()->paginate(6);
     }
 
     //查询用户认证状态

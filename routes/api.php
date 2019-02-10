@@ -46,7 +46,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('change', 'CollectionController@change');//个人收藏状态改变
     });
 
-    Route::get('detail', 'Controller@detail');//图书详情页
+    Route::get('detail', 'Controller@show_detail');//图书详情页
     Route::get('video', 'Controller@video');//视频url跳转
 
     Route::group(['prefix' => 'user'], function () {
@@ -56,5 +56,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('code','UserController@phone_code');//模拟获取验证码
         Route::get('set_code','UserController@set_code');//重置验证码
         Route::get('info','UserController@info');//用户中心信息查询
+
+        // Route::get('pass', 'UserController@pass');//用户认证通过
     });
 });

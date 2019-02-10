@@ -19,7 +19,7 @@ class Controller extends BaseController
     //图书详情页
     //参数 图书id 用户id
     //返回数组包含 图书信息 章节信息 收藏状态
-    public function detail(Request $request)
+    public function show_detail(Request $request)
     {
         $user_id = $request->user_id;
         $book_id = $request->book_id;
