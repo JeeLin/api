@@ -7,32 +7,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    // 登录
-    public function onload(Request $request)
-    {
-        $nickname = $request->nickName;
-        $avatar_url = $request->avatarUrl;
-        $code = $request->code;
+    //通过认证
+    // public function pass(Request $request)
+    // {
+    //     $id = $request->user_id;
 
-        //访问地址，拿到一个openID
-        $appid = 'wxffefb154a68d3118';
-        $secret = 'e36b66a72437e70c5e72f73eb7a1ae3d';
-        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appid.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
-        $return_info = json_decode(file_get_contents($url),true);
-        $openid = $return_info["openid"];
-
-        $user_id = User::where('openid',$openid)->value('id');
-        if(!$user_id){
-            User::insert([
-                'openid' => $openid,
-                'nickname' => $nickname,
-                'avatar_url' => $avatar_url
-            ]);
-            $user_id = User::where('openid',$openid)->value('id');
-        }
-
-        return $user_id;
-    }
+    //     User::where('id',$id)->update(['status'=>3]);
+    //     return ['success'=> true];
+    // }
 
     public function show()
     {
