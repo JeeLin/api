@@ -12,7 +12,6 @@ $factory->define(App\Models\Book::class, function (Faker $faker) {
         'published_date' => $faker->date(),
         'ISBN' => $faker->isbn13,
         'introduction' => $faker->sentence,
-        'type_id' => $faker->numberBetween(1,100),
         'book_code' => $faker->numberBetween(0,9999),
         'status' =>$faker->numberBetween(0,1)
     ];

@@ -8,7 +8,7 @@ class Book extends Model
 {
     //隐藏部分
     protected $hidden = [
-        'created_at', 'updated_at',
+        'deleted_at','created_at', 'updated_at',
     ];
 
     //书籍所属类型
@@ -29,9 +29,19 @@ class Book extends Model
     }
 
 
+    public function sorts()
+    {
+        return $this->hasMany(Sort::class);
+    }
+
     //视频
-    public function video()
+    public function videos()
     {
         return $this->hasMany(Video::class);
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
     }
 }

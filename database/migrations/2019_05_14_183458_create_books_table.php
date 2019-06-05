@@ -23,12 +23,10 @@ class CreateBooksTable extends Migration
             $table->date('published_date')->comment('出版时间');
             $table->string('ISBN')->uniqe();
             $table->longtext('introduction')->comment('内容简介');
-            $table->unsignedInteger('type_id')->comment('书籍分类编号');
             $table->unsignedInteger('book_code')->uniqe()->comment('一书一码');
-            $table->tinyInteger('status')->comment('是否公开');
+            $table->tinyInteger('status')->comment('是否推广');
+            $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 

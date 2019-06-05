@@ -93,9 +93,10 @@ class BookController extends Controller
             'off' => ['value' => 0, 'text' => '不公开', 'color' => 'default'],
         ];
         $grid->status()->switch($states);
-        $grid->type_id('分类')->display(function ($id) {
-            return Type::find($id)->class;
-        });
+        // $grid->type_id('分类')->display(function ($id) {
+        //     return Type::find($id)->class;
+        // });
+        //分类关系已修改
 
         $grid->filter(function ($filter) {
             $filter->like('title', '书名');

@@ -8,6 +8,6 @@ class Banner extends Model
 {
     //隐藏部分
     protected $hidden = [
-        'created_at', 'updated_at',
+        'deleted_at','created_at', 'updated_at',
     ];
 }

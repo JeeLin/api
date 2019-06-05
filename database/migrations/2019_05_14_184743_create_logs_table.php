@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollectionsTable extends Migration
+class CreateLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateCollectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('collections', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedinteger('user_id');
             $table->unsignedinteger('book_id');
-            $table->timestamps();//应默认为当前时间
+            $table->integer('score')->default(0)->comment('操作评分');
+            $table->string('detail');
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
@@ -31,6 +33,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collections');
+        Schema::dropIfExists('logs');
     }
 }

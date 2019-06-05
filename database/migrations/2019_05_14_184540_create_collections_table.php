@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVideosTable extends Migration
+class CreateCollectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateVideosTable extends Migration
      */
     public function up()
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('collections', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedinteger('user_id');
             $table->unsignedinteger('book_id');
-            $table->unsignedinteger('order')->comment('章节顺序');
-            $table->string('catalog')->comment('章节内容');
-            $table->string('video_url')->comment('视频地址');
-            $table->unsignedinteger('video_code')->uniqe()->comment('一章一码');
-            $table->timestamps();//应默认为当前时间
+            $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });
     }
@@ -33,6 +31,6 @@ class CreateVideosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('collections');
     }
 }
